@@ -112,5 +112,66 @@
 
         });
     </script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#editButton').on('click', function() {
+            const selectedUsers = $('.select-user:checked');
+            const formContainer = $('#formContainer');
+            formContainer.empty(); // Clear previous forms
+
+            if (selectedUsers.length === 0) {
+                alert('Please select at least one user to edit.');
+                return;
+            }
+
+            selectedUsers.each(function(index, element) {
+                const userId = $(element).data('user-id');
+                const username = $(element).data('username');
+                const alamat = $(element).data('alamat');
+                const noTelepon = $(element).data('no-telepon');
+                const email = $(element).data('email');
+                const role = $(element).data('role');
+
+                formContainer.append(`
+                    <div class="user-form">
+                        <input type="hidden" name="users[${index}][id_user]" value="${userId}">
+                        <div class="form-group">
+                            <label for="username_${index}">Username</label>
+                            <input type="text" name="users[${index}][username]" id="username_${index}" value="${username}" class="form-control" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat_${index}">Alamat</label>
+                            <input type="text" name="users[${index}][alamat]" id="alamat_${index}" value="${alamat}" class="form-control" placeholder="Alamat" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="no_telepon_${index}">No Telepon</label>
+                            <input type="number" name="users[${index}][no_telepon]" id="no_telepon_${index}" value="${noTelepon}" class="form-control" placeholder="No Telepon" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email_${index}">Email</label>
+                            <input type="email" name="users[${index}][email]" id="email_${index}" value="${email}" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role_${index}">Role</label>
+                            <select class="form-control" name="users[${index}][role]" id="role_${index}">
+                                <option value="Pelanggan" ${role === 'Pelanggan' ? 'selected' : ''}>Pelanggan</option>
+                                <option value="Pegawai" ${role === 'Pegawai' ? 'selected' : ''}>Pegawai</option>
+                            </select>
+                        </div>
+                        <hr>
+                    </div>
+                `);
+            });
+
+            $('#exampleModal1').modal('show');
+        });
+    });
+</script>
+</body>
+</html>
+
 </body>
 </html>

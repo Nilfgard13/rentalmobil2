@@ -1,4 +1,5 @@
 <?php
+require_once 'libs/connection.php';
 /**
  * Register a user
  *
@@ -154,4 +155,31 @@ function deleteUser($id) {
     $pdo = db();
     $stmt = $pdo->prepare('DELETE FROM users WHERE id_user = :id_user');
     $stmt->execute([':id_user' => $id]);
+}
+
+function delete_users(array $user_ids): bool
+{
+    if (empty($user_ids)) {
+        return false;
+    }
+
+    // Create a string of placeholders for the IN clause
+    $placeholders = implode(',', array_fill(0, count($user_ids), '?'));
+
+    // SQL query with IN clause
+    $sql = "DELETE FROM users WHERE id_user IN ($placeholders)";
+
+    $statement = db()->prepare($sql);
+
+    // Bind values
+    foreach ($user_ids as $index => $id) {
+        $statement->bindValue($index + 1, $id, PDO::PARAM_INT); // PDO placeholders are 1-indexed
+    }
+
+    try {
+        return $statement->execute();
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+        return false;
+    }
 }

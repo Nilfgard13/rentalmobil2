@@ -1,5 +1,11 @@
 <?php
 
+
+const DB_HOST = '127.0.0.1';
+const DB_NAME = 'rentalmobil';
+const DB_USER = 'root';
+const DB_PASSWORD = '';
+
 /**
  * Connect to the database and returns an instance of PDO class
  * or false if the connection fails

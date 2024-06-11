@@ -167,26 +167,14 @@ require_login();
                     <div class="ibox-title">
                         <h5>Table Users</h5>
                         <div class="ibox-tools">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModal">
-                                Tambah
-                            </button>
-                            <button type="button" class="btn btn-success" data-toggle="modal"
-                                data-target="#exampleModa2">
-                                Edit
-                            </button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                data-target="#exampleModa3">
-                                Delete
-                            </button>
+
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Form Tambah Data</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -223,7 +211,7 @@ require_login();
 
                                                 </div>
                                                 <div class="form-group">
-                                                    <select class="form-control">
+                                                    <select class="form-control" name="role">
                                                         <option value="Pelanggan">Pelanggan</option>
                                                         <option value="Pegawai">Pegawai</option>
                                                     </select>
@@ -234,7 +222,7 @@ require_login();
                                                         value="<?= $inputs['password'] ?? '' ?>" class="form-control"
                                                         placeholder="Password">
                                                 </div>
-                                                <div class="form-group">
+                                                <!-- <div class="form-group">
                                                     <div class="checkbox i-checks"><label for="agree">
                                                             <div class="icheckbox_square-green"
                                                                 style="position: relative;"><input type="checkbox"
@@ -242,22 +230,51 @@ require_login();
                                                                     class="iCheck-helper"
                                                                     style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
                                                             </div><i></i> <input type="checkbox" name="agree" value="1"
-                                                                <?php echo isset($inputs['agree']) ? 'checked' : ''; ?>
+                                                                <?//php echo isset($inputs['agree']) ? 'checked' : ''; ?>
                                                                 required> I agree to the terms of service
 
                                                         </label><br>
                                                     </div>
-                                                </div>            
+                                                </div>             -->
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" value="<?= $inputs['action'] = 'tambah'; ?>">Save changes</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                value="<?= $inputs['action'] = 'tambah'; ?>">Save changes</button>
                                         </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
+                            <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Users</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" id="modalBody">
+                                            <form class="m-t" action="../../src/user.php" method="POST" id="editForm">
+                                                <input name="action" value="edit" type="hidden">
+                                                <div id="formContainer"></div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" form="editForm">Save
+                                                changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
@@ -270,35 +287,48 @@ require_login();
                     </div>
                     <div class="ibox-content">
 
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>checkbox</th>
-                                    <th>id</th>
-                                    <th>username</th>
-                                    <th>Alamat</th>
-                                    <th>No Telepon</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Password</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($users as $user): ?>
-                                    <tr onclick="toggleCheckbox(this)">
-                                        <td><input type="checkbox" name="select_user"
-                                                value="<?= htmlspecialchars($user['id_user'], ENT_QUOTES, 'UTF-8') ?>"></td>
-                                        <td><?= htmlspecialchars($user['id_user'], ENT_QUOTES, 'UTF-8') ?></td>
-                                        <td><?= htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') ?></td>
-                                        <td><?= htmlspecialchars($user['alamat'], ENT_QUOTES, 'UTF-8') ?></td>
-                                        <td><?= htmlspecialchars($user['no_telepon'], ENT_QUOTES, 'UTF-8') ?></td>
-                                        <td><?= htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8') ?></td>
-                                        <td><?= htmlspecialchars($user['role'], ENT_QUOTES, 'UTF-8') ?></td>
-                                        <td><?= htmlspecialchars($user['password'], ENT_QUOTES, 'UTF-8') ?></td>
+                        <form id="deleteForm" method="POST" action="../../src/admin_user.php">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>checkbox</th>
+                                        <th>id</th>
+                                        <th>username</th>
+                                        <th>Alamat</th>
+                                        <th>No Telepon</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($users as $user): ?>
+                                        <tr onclick="toggleCheckbox(this)">
+                                            <td><input type="checkbox" name="select_user[]"
+                                                    value="<?= htmlspecialchars($user['id_user'], ENT_QUOTES, 'UTF-8') ?>">
+                                            </td>
+                                            <td><?= htmlspecialchars($user['id_user'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?= htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?= htmlspecialchars($user['alamat'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?= htmlspecialchars($user['no_telepon'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?= htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?= htmlspecialchars($user['role'], ENT_QUOTES, 'UTF-8') ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModal">
+                                Tambah
+                            </button>
+                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#exampleModal1" id="editButton">
+                                Edit
+                            </button>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -699,7 +729,9 @@ require_login();
     </div>
 </div>
 
-<!--Checkbox listener-->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
     function toggleCheckbox(row) {
         const checkbox = row.querySelector('input[type="checkbox"]');
@@ -713,5 +745,74 @@ require_login();
         });
     });
 </script>
+
+<!--Checkbox listener-->
+<!-- <script>
+    function toggleCheckbox(row) {
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        checkbox.checked = !checkbox.checked;
+    }
+
+    // Optional: Prevent checkbox click event from propagating to row click event
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+    });
+
+    $(document).ready(function () {
+        $('#editButton').on('click', function () {
+            const selectedUsers = $('.select-user:checked');
+            const formContainer = $('#formContainer');
+            formContainer.empty(); // Clear previous forms
+
+            if (selectedUsers.length === 0) {
+                alert('Please select at least one user to edit.');
+                return;
+            }
+
+            selectedUsers.each(function (index, element) {
+                const userId = $(element).data('user-id');
+                const username = $(element).data('username');
+                const alamat = $(element).data('alamat');
+                const noTelepon = $(element).data('no-telepon');
+                const email = $(element).data('email');
+                const role = $(element).data('role');
+
+                formContainer.append(`
+                    <div class="user-form">
+                        <input type="hidden" name="users[${index}][id_user]" value="${userId}">
+                        <div class="form-group">
+                            <label for="username_${index}">Username</label>
+                            <input type="text" name="users[${index}][username]" id="username_${index}" value="${username}" class="form-control" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat_${index}">Alamat</label>
+                            <input type="text" name="users[${index}][alamat]" id="alamat_${index}" value="${alamat}" class="form-control" placeholder="Alamat" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="no_telepon_${index}">No Telepon</label>
+                            <input type="number" name="users[${index}][no_telepon]" id="no_telepon_${index}" value="${noTelepon}" class="form-control" placeholder="No Telepon" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email_${index}">Email</label>
+                            <input type="email" name="users[${index}][email]" id="email_${index}" value="${email}" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role_${index}">Role</label>
+                            <select class="form-control" name="users[${index}][role]" id="role_${index}">
+                                <option value="Pelanggan" ${role === 'Pelanggan' ? 'selected' : ''}>Pelanggan</option>
+                                <option value="Pegawai" ${role === 'Pegawai' ? 'selected' : ''}>Pegawai</option>
+                            </select>
+                        </div>
+                        <hr>
+                    </div>
+                `);
+            });
+
+            $('#exampleModal1').modal('show');
+        });
+    });
+</script> -->
 
 <?php view('admin_footer') ?>
